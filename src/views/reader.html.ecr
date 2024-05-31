@@ -42,7 +42,7 @@
 
         <div x-cloak x-show="!loading && mode !== 'continuous'" class="uk-flex uk-flex-middle" :style="`height:${fitType === 'vert' ? '100vh' : ''}; min-width: fit-content;`">
 
-          <img uk-img :class="{
+          <img x-show="enableRightToLeft === false" uk-img :class="{
                                'uk-align-center': true, 
                                'uk-animation-slide-left': flipAnimation === 'left', 
                                'uk-animation-slide-right': flipAnimation === 'right'
@@ -50,10 +50,38 @@
                                                                                                                                                                  width:${fitType === 'horz' ? '100vw' : 'auto'}; 
                                                                                                                                                                  height:${fitType === 'vert' ? '100vh' : 'auto'}; 
                                                                                                                                                                  margin-bottom:0;
+                                                                                                                                                                 margin-top:0;
                                                                                                                                                                  max-width:${fitType === 'horz' ? '100%' : fitType === 'vert' ? '' : 'none' };
                                                                                                                                                                  max-height:${fitType === 'vert' ? '100%' : fitType === 'horz' ? '' : 'none'};
                                                                                                                                                                  object-fit: contain;
                                                                                                                                                                  `" />
+          <img uk-img :class="{
+                               'uk-align-center': true, 
+                               'uk-animation-slide-left': flipAnimation === 'left', 
+                               'uk-animation-slide-right': flipAnimation === 'right'
+                               }" :data-src="nextItem.url" :width="nextItem.width" :height="nextItem.height" :id="nextItem.id" @click="clickImage($event)" :style="`
+                                                                                                                                                                 width:${fitType === 'horz' ? '100vw' : 'auto'}; 
+                                                                                                                                                                 height:${fitType === 'vert' ? '100vh' : 'auto'}; 
+                                                                                                                                                                 margin-bottom:0;
+                                                                                                                                                                 margin-top:0;
+                                                                                                                                                                 max-width:${fitType === 'horz' ? '100%' : fitType === 'vert' ? '' : 'none' };
+                                                                                                                                                                 max-height:${fitType === 'vert' ? '100%' : fitType === 'horz' ? '' : 'none'};
+                                                                                                                                                                 object-fit: contain;
+                                                                                                                                                                 `" />
+          <img x-show="enableRightToLeft === true" uk-img :class="{
+                               'uk-align-center': true, 
+                               'uk-animation-slide-left': flipAnimation === 'left', 
+                               'uk-animation-slide-right': flipAnimation === 'right'
+                               }" :data-src="curItem.url" :width="curItem.width" :height="curItem.height" :id="curItem.id" @click="clickImage($event)" :style="`
+                                                                                                                                                                 width:${fitType === 'horz' ? '100vw' : 'auto'}; 
+                                                                                                                                                                 height:${fitType === 'vert' ? '100vh' : 'auto'}; 
+                                                                                                                                                                 margin-bottom:0;
+                                                                                                                                                                 margin-top:0;
+                                                                                                                                                                 max-width:${fitType === 'horz' ? '100%' : fitType === 'vert' ? '' : 'none' };
+                                                                                                                                                                 max-height:${fitType === 'vert' ? '100%' : fitType === 'horz' ? '' : 'none'};
+                                                                                                                                                                 object-fit: contain;
+                                                                                                                                                                 `" />
+
 
           <div style="position:absolute;z-index:1; top:0;left:0; width:30%;height:100%;" @click="flipPage(false ^ enableRightToLeft)"></div>
           <div style="position:absolute;z-index:1; top:0;right:0; width:30%;height:100%;" @click="flipPage(true ^ enableRightToLeft)"></div>

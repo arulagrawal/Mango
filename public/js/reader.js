@@ -1,12 +1,13 @@
 const readerComponent = () => {
   return {
     loading: true,
-    mode: 'continuous', // Can be 'continuous', 'height' or 'width'
+    mode: 'height', // Can be 'continuous', 'height' or 'width'
     msg: 'Loading the web reader. Please wait...',
     alertClass: 'uk-alert-primary',
     items: [],
     curItem: {},
-    enableFlipAnimation: true,
+    nextItem: {},
+    enableFlipAnimation: false,
     flipAnimation: null,
     longPages: false,
     lastSavedPage: page,
@@ -149,7 +150,7 @@ const readerComponent = () => {
      */
     flipPage(isNext) {
       const idx = parseInt(this.curItem.id);
-      const newIdx = idx + (isNext ? 1 : -1);
+      const newIdx = idx + (isNext ? 2 : -2);
 
       if (newIdx <= 0) return;
       if (newIdx > this.items.length) {
@@ -159,6 +160,7 @@ const readerComponent = () => {
 
       if (newIdx + this.preloadLookahead < this.items.length + 1) {
         this.preloadImage(this.items[newIdx + this.preloadLookahead - 1].url);
+        this.preloadImage(this.items[newIdx + this.preloadLookahead - 2].url);
       }
 
       this.toPage(newIdx);
@@ -185,6 +187,7 @@ const readerComponent = () => {
       } else {
         if (idx >= 1 && idx <= this.items.length) {
           this.curItem = this.items[idx - 1];
+          this.nextItem = this.items[idx];
         }
       }
       this.replaceHistory(idx);
@@ -311,6 +314,7 @@ const readerComponent = () => {
             const current = $(event.currentTarget).attr('id');
 
             this.curItem = this.items[current - 1];
+            this.nextItem = this.items[current];
             this.replaceHistory(current);
           }
         });
